@@ -2,19 +2,14 @@ package com.formationandroid.listesimple
 
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity()
 {
 	
-	// Vues :
-	private lateinit var recyclerView: RecyclerView
-	private lateinit var editTextMemo: EditText
-
 	// Adapter :
 	private lateinit var memosAdapter: MemosAdapter
 
@@ -25,16 +20,12 @@ class MainActivity : AppCompatActivity()
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 
-		// vues :
-		recyclerView = findViewById(R.id.liste_memos)
-		editTextMemo = findViewById(R.id.saisie_memo)
-
 		// à ajouter pour de meilleures performances :
-		recyclerView.setHasFixedSize(true)
+		liste_memos.setHasFixedSize(true)
 
 		// layout manager, décrivant comment les items sont disposés :
 		val layoutManager = LinearLayoutManager(this)
-		recyclerView.layoutManager = layoutManager
+		liste_memos.layoutManager = layoutManager
 
 		// contenu d'exemple :
 		val listeMemos: MutableList<Memo> = ArrayList()
@@ -45,7 +36,7 @@ class MainActivity : AppCompatActivity()
 
 		// adapter :
 		memosAdapter = MemosAdapter(listeMemos)
-		recyclerView.adapter = memosAdapter
+		liste_memos.adapter = memosAdapter
 	}
 
 	/**
@@ -56,13 +47,13 @@ class MainActivity : AppCompatActivity()
 	fun onClickBoutonValider(view: View?)
 	{
 		// ajout du mémo :
-		memosAdapter.ajouterMemo(Memo(editTextMemo.text.toString()))
+		memosAdapter.ajouterMemo(Memo(saisie_memo.text.toString()))
 
 		// animation de repositionnement de la liste (sinon on ne voit pas l'item ajouté) :
-		recyclerView.smoothScrollToPosition(0)
+		liste_memos.smoothScrollToPosition(0)
 
 		// on efface le contenu de la zone de saisie :
-		editTextMemo.setText("")
+		saisie_memo.setText("")
 	}
 	
 }
